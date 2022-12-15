@@ -510,6 +510,9 @@ void CPathView::OnKeyDownTextCtrl(wxKeyEvent& event)
 	{
 		m_pTxtCtrl->SetLabelText(wxT(""));
 		m_pTxtCtrl->Show(false);
+
+		wxWindow* pFileListView = _gContextManager->GetActivateViewItem();
+		pFileListView->SetFocus();
 	}
 
 	event.Skip();
