@@ -496,11 +496,22 @@ void CPathView::OnEnterTextCtrl(wxCommandEvent& event)
 	evt.SetString(strNewPath);
 	evt.SetInt(SEND_PATH_TO_FILELIST);
 
+	wxWindow* pParent = GetParent();
 	wxWindow* pActivateViewPanel = _gContextManager->GetActivatePanel(_gActivatedTab);
+
+	if(pParent != pActivateViewPanel)
+	{
+		_gContextManager->ChangeTab();
+		pActivateViewPanel = _gContextManager->GetActivatePanel(_gActivatedTab);
+	}
+
 	wxPostEvent(pActivateViewPanel, evt);
 
 	m_pTxtCtrl->SetLabelText(wxT(""));
 	m_pTxtCtrl->Show(false);
+
+	wxWindow* pFileListView = _gContextManager->GetActivateViewItem();
+	pFileListView->SetFocus();
 }
 
 void CPathView::OnKeyDownTextCtrl(wxKeyEvent& event)
