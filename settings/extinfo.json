@@ -362,5 +362,8 @@
     "DMP": "DMP 파일",
     "TXT산": "TXT산 파일",
     "PHD": "PHD 파일",
-    "RDF": "RDF 파일"
+    "RDF": "RDF 파일",
+    "EFX": "EFX 파일",
+    "TC": "TC 파일",
+    "EMX": "EMX 파일"
 }
