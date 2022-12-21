@@ -75,10 +75,21 @@ void CLocalFileListView::LoadDirectory(const wxString& strPath)
 
 	while (localFileSys.GetNextFile(strName, &isDir, &lattr, &llSize, &dt))
 	{
-		if (!theJsonConfig->IsViewAllFile())
+		/**************************************************************************
+		 * 윈도우 11에서는 .. 의 속성이 HIDDEN을 포함
+		 *    아래의 경우해당
+		 *       C:\                     - 해당없음
+		 *       C:\Windows              - 해당(최상위 + 1 단계의 경우만 해당함)
+		 *       C:\Program Files\폴더명 - 해당없음
+		 * > 상위폴더 이동표시는 모든 하위 폴더에서 표시가 되어야 하므로 강제 표시
+		 **************************************************************************/
+		if(strName.CmpNoCase(wxT("..")) != 0)
 		{
-			if(theUtility->IsAllowAttr(lattr))
-				continue;
+			if (!theJsonConfig->IsViewAllFile())
+			{
+				if(theUtility->IsAllowAttr(lattr))
+					continue;
+			}
 		}
 
 		CDirData dirItem;
