@@ -22,8 +22,13 @@
 ```shell
 > Release build
   mingw32-make -j8 -f makefile.gcc SHARED=1 UNICODE=1 CFG=x64 CXXFLAGS="-std=c++20" BUILD=release clean
+  mingw32-make -j8 -f makefile.gcc setup_h SHARED=1 UNICODE=1 CFG=x64 CXXFLAGS="-std=c++20" BUILD=release
+  mingw32-make -j8 -f makefile.gcc SHARED=1 UNICODE=1 CFG=x64 CXXFLAGS="-std=c++20" BUILD=release
+  
 > Debug build
-  mingw32-make -j8 -f makefile.gcc SHARED=1 UNICODE=1 CFG=x64 CXXFLAGS="-std=c++20" BUILD=debug clean  
+  mingw32-make -j8 -f makefile.gcc SHARED=1 UNICODE=1 CFG=x64 CXXFLAGS="-std=c++20" BUILD=debug clean
+  mingw32-make -j8 -f makefile.gcc setup_h SHARED=1 UNICODE=1 CFG=x64 CXXFLAGS="-std=c++20" BUILD=debug
+  mingw32-make -j8 -f makefile.gcc SHARED=1 UNICODE=1 CFG=x64 CXXFLAGS="-std=c++20" BUILD=debug
 ```
 
 
