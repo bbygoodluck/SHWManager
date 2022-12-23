@@ -1,5 +1,7 @@
 # SHWManager
 
+[toc]
+
 ## Introduce
 
 - SHWManager is advanced file manager for windows, Linux, Mac(Linux and mac is not supported yet)
