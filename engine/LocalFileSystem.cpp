@@ -640,14 +640,31 @@ enum FILE_TYPE CLocalFileSystem::GetFileType(const wxString& path)
 {
 #ifdef __WXMSW__
 	DWORD result = GetFileAttributes(path);
-	if (result & FILE_ATTRIBUTE_DIRECTORY)
-		return FTYPE_DIR;
-
 	if (result == INVALID_FILE_ATTRIBUTES)
 		return FTYPE_UNKNOWN;
 
+	const unsigned long attrubute_mapping[][2] = {
+		{ FILE_ATTRIBUTE_DIRECTORY,			FTYPE_DIR     },
+		{ FILE_ATTRIBUTE_REPARSE_POINT,		FTYPE_LINK    },
+		{ FILE_ATTRIBUTE_READONLY,          FTYPE_FILE    },
+		{ FILE_ATTRIBUTE_HIDDEN,            FTYPE_FILE    },
+		{ FILE_ATTRIBUTE_SYSTEM,            FTYPE_FILE    }
+	};
+
+	for (unsigned long i = 0; i < WXSIZEOF(attrubute_mapping); ++i)
+	{
+		if (result & attrubute_mapping[i][0])
+			return attrubute_mapping[i][1];
+	}
+	/*
+	if (result & FILE_ATTRIBUTE_DIRECTORY)
+		return FTYPE_DIR;
+
+
+
 	if (result & FILE_ATTRIBUTE_REPARSE_POINT)
 		return FTYPE_LINK;
+	*/
 /*
 	const HANDLE h = ::CreateFile( path.t_str() ,
                                    0,

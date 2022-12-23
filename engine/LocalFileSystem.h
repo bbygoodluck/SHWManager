@@ -33,7 +33,7 @@ public:
 	static bool RecursiveDelete(const std::list<wxString>& dirsToVisit, wxWindow* parent, bool bGoTrash, int& iRet);
 
 	static enum FILE_TYPE GetFileType(const wxString& path);
-
+	enum FILE_TYPE GetFileAttribute(const wxString& strFullPathFileName);
 private:
 #ifdef __WXMSW__
 	static bool RecursiveDeleteSHFileOperation(const std::list<wxString>& dirsToVisit, wxWindow* parent, bool bGoTrash, int& iRet);
