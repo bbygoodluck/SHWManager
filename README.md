@@ -19,8 +19,11 @@
 - Compiler : gcc 12.2.0
 - Gui Library : wxWidgets 3.2.1
 
-```
-mingw32-make -j8 -f makefile.gcc SHARED=1 UNICODE=1 CFG=x64 CXXFLAGS="-std=c++20" WXUNIV=1 BUILD=release clean
+```shell
+> Release build
+  mingw32-make -j8 -f makefile.gcc SHARED=1 UNICODE=1 CFG=x64 CXXFLAGS="-std=c++20" BUILD=release clean
+> Debug build
+  mingw32-make -j8 -f makefile.gcc SHARED=1 UNICODE=1 CFG=x64 CXXFLAGS="-std=c++20" BUILD=debug clean  
 ```
 
 
