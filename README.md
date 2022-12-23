@@ -16,7 +16,7 @@
 
 ## Build
 
-- Compiler : gcc 12.2.0
+- Compiler : gcc 12.2.0 [WinLibs](https://winlibs.com/)
 - Gui Library : wxWidgets 3.2.1
 
 ```shell
