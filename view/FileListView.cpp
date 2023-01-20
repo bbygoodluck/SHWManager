@@ -2249,8 +2249,8 @@ void CFileListView::FindMatchItems()
 #ifdef __WXMSW__
 	strKeyInput.MakeLower();
 #endif
-
-	wxString strRegEx(wxT("^") + strKeyInput);
+	//문자열 포함
+	wxString strRegEx(wxT("^.*(") + strKeyInput + wxT(").*"));
 	wxRegEx _regex(strRegEx);
 
 	wxString strName;
