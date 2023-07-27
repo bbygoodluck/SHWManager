@@ -127,7 +127,7 @@ void CUtility::LaunchAndExec(const wxString& strExecProgram, const wxString& str
 		wxMessageBox(strExecProgram + wxT(" is not exist file extention info"), PROGRAM_FULL_NAME, wxICON_INFORMATION | wxOK);
 		return;
 	}
-/*
+
 	if(Compare(strExt.MakeLower(), wxT("exe")) == 0)
 	{
 		SHELLEXECUTEINFO execInfo;
@@ -141,13 +141,8 @@ void CUtility::LaunchAndExec(const wxString& strExecProgram, const wxString& str
 		execInfo.nShow = SW_SHOWDEFAULT;
 
 		ShellExecuteEx(&execInfo);
-	}
-	else
-		wxLaunchDefaultApplication(strExecProgram);
-*/
-	if(Compare(strExt.MakeLower(), wxT("exe")) == 0)
-	{
-		STARTUPINFO si;
+
+	/*	STARTUPINFO si;
 		PROCESS_INFORMATION pi;
 
 		wxZeroMemory(si);
@@ -165,6 +160,7 @@ void CUtility::LaunchAndExec(const wxString& strExecProgram, const wxString& str
 					  NULL,
 					  &si,
 					  &pi);
+		*/
 	}
 	else
 		wxLaunchDefaultApplication(strExecProgram);

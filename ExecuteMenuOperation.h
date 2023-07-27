@@ -76,6 +76,7 @@ private:
 	void ViewMenu_SortTime();
 	void ViewMenu_SortSize();
 	void ViewMenu_SubDir();
+	void ViewMenu_DirNum();
 	//즐겨찾기
 	void FavoriteMenu_Add();
 	void FavoriteMenu_Manager();

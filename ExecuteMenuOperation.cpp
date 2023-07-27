@@ -92,6 +92,7 @@ void CExecuteMenuOperation::Init()
 		{ wxT("m_viewMenu_SortTime"),	            std::bind(&CExecuteMenuOperation::ViewMenu_SortTime             , this ) },
 		{ wxT("m_viewMenu_SortSize"),	            std::bind(&CExecuteMenuOperation::ViewMenu_SortSize             , this ) },
 		{ wxT("m_viewMenu_SubDir"),	                std::bind(&CExecuteMenuOperation::ViewMenu_SubDir               , this ) },
+		{ wxT("m_viewMenu_DirNumber"),	            std::bind(&CExecuteMenuOperation::ViewMenu_DirNum               , this ) },
 		//즐겨찾기
 		{ wxT("m_favoriteMenu_Add"),	            std::bind(&CExecuteMenuOperation::FavoriteMenu_Add              , this ) },
 		{ wxT("m_favoriteMenu_Manager"),	        std::bind(&CExecuteMenuOperation::FavoriteMenu_Manager          , this ) },
@@ -787,6 +788,13 @@ void CExecuteMenuOperation::ViewMenu_SubDir()
 {
 
 }
+
+// 2023.05.26 Add Start *****************************************
+void CExecuteMenuOperation::ViewMenu_DirNum()
+{
+	_gContextManager->ViewDirectoryNumbering();
+}
+// 2023.05.26 Add End   *****************************************
 
 void CExecuteMenuOperation::ChangeFileList(FILE_VIEW_OPTION viewOP)
 {

@@ -35,6 +35,10 @@ wxBEGIN_EVENT_TABLE(CFileListView, wxWindow)
 	EVT_MY_CUSTOM_COMMAND(wxEVT_VIEW_BOOKMARK, wxID_ANY, CFileListView::OnShowBookmark)
 	EVT_MY_CUSTOM_COMMAND(wxEVT_EXEC_MENU_CLICK, wxID_ANY, CFileListView::OnExecMenuClick)
 	EVT_MY_CUSTOM_COMMAND(wxEVT_SHOW_COMPRESS_MENU, wxID_ANY, CFileListView::OnShowCompressMenu)
+
+	//2023.05.26 Add Start *********************************************************
+	EVT_MY_CUSTOM_COMMAND(wxEVT_VIEW_DIR_NUM, wxID_ANY, CFileListView::OnViewDirNumbering)
+	//2023.05.26 Add End   *********************************************************
 wxEND_EVENT_TABLE()
 
 CFileListView::CFileListView(wxWindow* parent, const int nID, const wxSize& sz)
@@ -139,7 +143,11 @@ void CFileListView::Initialize()
 	m_bDirLoaded = false;
 	//화면 변경 플래그
 	m_bSizeOrColumnChanged = false;
-
+	//2023.05.26 Add Start *********************************************************
+//	if(m_bDirectoryNumbering)
+//		_gContextManager->ViewDirectoryNumbering();
+	m_bDirectoryNumbering = false;
+	//2023.05.26 Add End   *********************************************************
 	m_pSelectedItemView->SetTooltipText(wxT(""));
 	m_pSelectedItemView->Show(false);
 
@@ -216,6 +224,14 @@ void CFileListView::PreTranslateKeyEvent(wxKeyEvent& event)
 	{
 		SelectedItemsClear();
 		InitKeyInputTooltip();
+
+		//2023.05.26 Add Start **************************************************************
+		if(m_bDirectoryNumbering)
+		{
+			wxCommandEvent evt(wxEVT_VIEW_DIR_NUM);
+			wxPostEvent(this, evt);
+		}
+		//2023.05.26 Add End   **************************************************************
 		return;
 	}
 
@@ -268,6 +284,9 @@ void CFileListView::PreTranslateKeyEvent(wxKeyEvent& event)
 	}
 	else
 	{
+		if(m_bDirectoryNumbering && !isdigit(nKeyCode))
+			return;
+
 		m_strKeyInput += strKeyName;
 		nLenKeyInput = m_strKeyInput.Len();
 	}
@@ -295,7 +314,9 @@ void CFileListView::PreTranslateKeyEvent(wxKeyEvent& event)
 			m_pKeyInputToolTip->SetSize(szTooltip);
 			m_pKeyInputToolTip->Show(true);
 
-			FindMatchItems();
+			if(!m_bDirectoryNumbering)
+				FindMatchItems();
+
 			bRefresh = true;
 		}
 		else
@@ -325,6 +346,9 @@ bool CFileListView::ProcessKeyEvent(int nKeyCode)
 			break;
 
 		case WXK_TAB:
+			if(m_bDirectoryNumbering)
+				m_bDirectoryNumbering = false;
+
 			_gContextManager->ChangeTab();
 			break;
 
@@ -353,6 +377,18 @@ bool CFileListView::ProcessKeyEvent(int nKeyCode)
 			break;
 
 		case WXK_RETURN: //Enter key
+			//2023.05.28 Add Start ******************************************************************
+			if(m_bDirectoryNumbering && !m_strKeyInput.IsEmpty())
+			{
+				int nDirNum = 0;
+				m_strKeyInput.ToInt(&nDirNum);
+
+				if(nDirNum <= 0)
+					return false;
+
+				m_nCurrentItemIndex = nDirNum - 1;
+			}
+			//2023.05.28 Add End   ******************************************************************
 			ProcessEnterKey(nKeyCode);
 			break;
 
@@ -559,7 +595,7 @@ bool CFileListView::ProcessEnterKey(int nKeyCode)
 	}
 	else if(dirData.IsFile())
 	{
-		theUtility->LaunchAndExec(dirData.GetFullPath(), m_strCurrentPath);
+		theUtility->LaunchAndExec(dirData.GetFullPath(), dirData.GetPath());//m_strCurrentPath);
 		bReadDirectory = false;
 	}
 	else
@@ -1307,6 +1343,26 @@ void CFileListView::DisplayItems(wxDC* pDC)
 
 			DrawItemImage(pDC, iImageX, iImageY, iImageFlag, iter->m_iIconIndex, iter->m_iOvelayIndex);
 		}
+
+		//2023.05.26 Add Start **************************************************************
+		if(m_bDirectoryNumbering && isDir)
+		{
+			wxString strDirNum = wxString::Format("%d", nIndex + 1);
+			int nDirNumX1 = 0;
+			int nDirNumY1 = 0;
+			int nDirNumX2 = 0;
+			int nDirNumY2 = 0;
+
+			nDirNumX1 = posInfo.m_nameRect.GetRight() - (10 * strDirNum.Len());
+			nDirNumY1 = posInfo.m_nameRect.GetTop();
+			nDirNumX2 = posInfo.m_nameRect.GetRight();
+			nDirNumY2 = posInfo.m_nameRect.GetBottom();
+
+			wxRect rcDirNum(wxPoint(nDirNumX1, nDirNumY1), wxPoint(nDirNumX2, nDirNumY2));
+			pDC->SetTextForeground(wxColour(255, 255, 0));
+			pDC->DrawLabel(strDirNum, rcDirNum, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL);
+		}
+		//2023.05.26 Add End   **************************************************************
 
 		nPosIndex++;
 	}
@@ -2493,4 +2549,11 @@ void CFileListView::OnCompressMenuExecute(wxCommandEvent& event)
 	evt.SetString(strCompressedFile);
 
 	wxPostEvent(_gMenuEvent, evt);
+}
+
+
+void CFileListView::OnViewDirNumbering(wxCommandEvent& event)
+{
+	m_bDirectoryNumbering = !m_bDirectoryNumbering;
+	theUtility->RefreshWindow(this, m_viewRect);
 }

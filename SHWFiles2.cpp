@@ -23,6 +23,9 @@ bool CSHWFiles2::OnInit()
 		return false;
 	}
 
+	if (!Initialize())
+		return false;
+
 #ifdef __WXMSW__
 	::OleInitialize(0);
 #endif
@@ -38,9 +41,6 @@ bool CSHWFiles2::OnInit()
 		return false;
 	}
 #endif
-
-	if (!Initialize())
-		return false;
 
 	CMainFrame* pMainFrame = new CMainFrame(m_strTitle);
 	pMainFrame->Show();
@@ -234,7 +234,7 @@ bool CSHWFiles2::Initialize()
 	m_strTitle += wxT(" - Debug Version");
 #endif
 
-	m_strTitle += wxT(" Build-Date : 2023-01-20");
+	m_strTitle += wxT(" Build-Date : 2023-07-27");
 
 	_gAttrIndex = 0;
 	if(theJsonConfig->IsViewHiddenFile())

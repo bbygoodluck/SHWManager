@@ -59,6 +59,10 @@ public:
 
 	void AllItemSelectOrRelease(_MENU_EVENT_TYPE mType);
 	wxWindow* GetViewParent() { return m_pParent; }
+
+	//2023.05.26 Add Start **************************************************************
+	bool IsShowDirectoryNumbering() const { return m_bDirectoryNumbering; }
+	//2023.05.26 Add End   **************************************************************
 public:
 	typedef struct _SELITEM_INFO {
 		int m_iSelIndex;
@@ -116,6 +120,9 @@ protected:
 	bool m_bRename      = false;
 	//마우스 클릭&아이템찾기
 	bool m_bMouseClickItemFound = false;
+	//2023.05.26 Add Start *********************************************************
+	bool m_bDirectoryNumbering  = false;
+	//2023.05.26 Add End   *********************************************************
 	// 전체아이템수
 	int	m_nTotalItems         = 0;
     //Path Depth
@@ -318,6 +325,11 @@ protected:
 	//압축메뉴 보기
 	void OnShowCompressMenu(wxCommandEvent& event);
 	void OnCompressMenuExecute(wxCommandEvent& event);
+
+	// 2023.05.26 Add Start *****************************************
+	//디렉토리 넘버링
+	void OnViewDirNumbering(wxCommandEvent& event);
+	// 2023.05.26 Add End   *****************************************
     wxDECLARE_EVENT_TABLE();
 };
 

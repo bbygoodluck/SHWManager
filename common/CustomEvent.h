@@ -37,4 +37,7 @@ wxDECLARE_EVENT(wxEVT_SHOW_COMPRESS_MENU, wxCommandEvent);
 wxDECLARE_EVENT(wxEVT_COMPRESS_EXEC, wxCommandEvent);
 //압축체크
 wxDECLARE_EVENT(wxEVT_DECOMPRESS_DUP_CHECK, wxCommandEvent);
+//2023.05.26 Add Start *********************************************************
+wxDECLARE_EVENT(wxEVT_VIEW_DIR_NUM, wxCommandEvent);
+//2023.05.26 Add End   *********************************************************
 #endif // CUSTOMEVENT_H_INCLUDED

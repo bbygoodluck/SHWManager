@@ -80,6 +80,7 @@ void CMenuEvent::Init()
 		{ wxT("m_viewMenu_SortTime"),	            _MENU_VIEW_SORT_TIME },
 		{ wxT("m_viewMenu_SortSize"),	            _MENU_VIEW_SORT_SIZE },
 		{ wxT("m_viewMenu_SubDir"),	                _MENU_VIEW_SUBDIR },
+		{ wxT("m_viewMenu_DirNumber"),	            _MENU_VIEW_DIR_NUMBER },
 		{ wxT("m_favoriteMenu_Add"),	            _MENU_FAVORITE_ITEM_ADD },
 		{ wxT("m_favoriteMenu_Manager"),	        _MENU_FAVORITE_MANAGER },
 		{ wxT("m_SystemMenu_Resource"),	            _MENU_SYSTEM_RESOURCE_USAGE },
@@ -192,6 +193,11 @@ void CMenuEvent::OnMenuEventUpdate(wxUpdateUIEvent& event)
 
 		wxString strSortMenu = wxT("m_viewMenu_Sort") + _stSortType[iSortType].strType;
 		if(_iupdateID == XRCID(strSortMenu))
+			event.Check(true);
+	}
+	else if(_iupdateID == XRCID("m_viewMenu_DirNumber"))
+	{
+		if(_gContextManager->IsShowDirectoryNumbering())
 			event.Check(true);
 	}
 }

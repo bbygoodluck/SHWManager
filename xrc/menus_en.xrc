@@ -424,6 +424,11 @@
 				<accel>Ctrl+Shift+D</accel>
 				<help></help>
 			</object>
+			<object class="wxMenuItem" name="m_viewMenu_DirNumber">
+				<label>Dir Numbering</label>
+				<checkable>1</checkable>
+				<accel>Ctrl+L</accel>
+			</object>
 		</object>
 		<object class="wxMenu" name="m_menuFavorite">
 			<label>Bookmark</label>

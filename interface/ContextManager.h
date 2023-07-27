@@ -40,7 +40,15 @@ public:
 	void ChangeFileListSort();
 	void GotoBookmarkPath(const wxString& strPath);
 	void ShowBookmarkWhenStatusbarClick();
+	// 2023.05.26 Add Start *****************************************
+	void ViewDirectoryNumbering();
+	bool IsShowDirectoryNumbering();
+	// 2023.05.26 Add End   *****************************************
 
+protected:
+	// 2023.05.30 Add Start *****************************************
+	void SendEventToActiveView(wxEventType evtType);
+	// 2023.05.30 Add End   *****************************************
 private:
 	CTabManager* GetNotActivateTab();
 	void SendViewChangeEvent(wxEventType evtType);

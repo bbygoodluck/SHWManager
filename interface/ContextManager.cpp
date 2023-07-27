@@ -193,9 +193,43 @@ void CContextManager::GotoBookmarkPath(const wxString& strPath)
 
 void CContextManager::ShowBookmarkWhenStatusbarClick()
 {
+	SendEventToActiveView(wxEVT_VIEW_BOOKMARK);
+	/*
 	wxCommandEvent evt(wxEVT_VIEW_BOOKMARK);
 	CViewPanel* pActiveViewPanel = (CViewPanel *)GetActivatePanel(_gActivatedTab);
 
 	if(pActiveViewPanel)
 		wxPostEvent(pActiveViewPanel->GetFileListView(), evt);
+	*/
 }
+
+// 2023.05.26 Add Start *****************************************
+void CContextManager::ViewDirectoryNumbering()
+{
+	SendEventToActiveView(wxEVT_VIEW_DIR_NUM);
+/*
+	wxCommandEvent evt(wxEVT_VIEW_DIR_NUM);
+	CViewPanel* pActiveViewPanel = (CViewPanel *)GetActivatePanel(_gActivatedTab);
+
+	if(pActiveViewPanel)
+		wxPostEvent(pActiveViewPanel->GetFileListView(), evt);
+*/
+}
+
+bool CContextManager::IsShowDirectoryNumbering()
+{
+	CViewPanel* pActiveViewPanel = (CViewPanel *)GetActivatePanel(_gActivatedTab);
+	return pActiveViewPanel->GetFileListView()->IsShowDirectoryNumbering();
+}
+// 2023.05.26 Add End   *****************************************
+
+// 2023.05.30 Add Start *****************************************
+void CContextManager::SendEventToActiveView(wxEventType evtType)
+{
+	wxCommandEvent evt(evtType);
+	CViewPanel* pActiveViewPanel = (CViewPanel *)GetActivatePanel(_gActivatedTab);
+
+	if(pActiveViewPanel)
+		wxPostEvent(pActiveViewPanel->GetFileListView(), evt);
+}
+// 2023.05.30 Add End   *****************************************
