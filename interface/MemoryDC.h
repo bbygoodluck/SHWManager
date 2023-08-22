@@ -32,6 +32,7 @@ protected:
 
     //변경사이즈(OnSize Event)
 	wxSize m_szChagned = wxSize(0, 0);
+	wxRect m_rc = wxRect(0, 0, 0, 0);
 
 private:
 };

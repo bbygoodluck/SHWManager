@@ -14,11 +14,15 @@ CMemoryDC::~CMemoryDC()
 void CMemoryDC::CreateMemoryBuffer(wxDC* pDC)
 {
 	if(m_pMemDC == nullptr)
+	{
 		m_pMemDC = std::make_unique<wxMemoryDC>(pDC);
+		ChangeViewSize(wxSize(m_rc.GetWidth(), m_rc.GetHeight()));
+	}
 }
 
 wxMemoryDC* CMemoryDC::CreateMemoryDC(wxDC* pDC, const wxRect& rc, const wxColour& colPen, const wxColour colBrush)
 {
+	m_rc = rc;
 	CreateMemoryBuffer(pDC);
 
 	DetachDC();
