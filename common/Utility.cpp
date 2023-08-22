@@ -130,7 +130,7 @@ void CUtility::LaunchAndExec(const wxString& strExecProgram, const wxString& str
 
 	if(Compare(strExt.MakeLower(), wxT("exe")) == 0)
 	{
-		SHELLEXECUTEINFO execInfo;
+/*		SHELLEXECUTEINFO execInfo;
 		wxZeroMemory(execInfo);
 
 		execInfo.cbSize = sizeof(execInfo);
@@ -141,15 +141,16 @@ void CUtility::LaunchAndExec(const wxString& strExecProgram, const wxString& str
 		execInfo.nShow = SW_SHOWDEFAULT;
 
 		ShellExecuteEx(&execInfo);
-
-	/*	STARTUPINFO si;
+*/
+		STARTUPINFO si;
 		PROCESS_INFORMATION pi;
 
 		wxZeroMemory(si);
 		wxZeroMemory(pi);
 
 		si.cb = sizeof(si);
-
+#if defined(_UNICODE) || (UNICODE)
+		SetErrorMode(0);
 		CreateProcess(NULL,
 					  strExecProgram.wchar_str(),
 					  NULL,
@@ -157,10 +158,21 @@ void CUtility::LaunchAndExec(const wxString& strExecProgram, const wxString& str
 					  FALSE,
 					  0,
 					  NULL,
-					  NULL,
+					  strPath.wchar_str(),
 					  &si,
 					  &pi);
-		*/
+#else
+		CreateProcess(NULL,
+					  strExecProgram.mb_str(),
+					  NULL,
+					  NULL,
+					  FALSE,
+					  0,
+					  NULL,
+					  strPath.mb_str(),
+					  &si,
+					  &pi);
+#endif
 	}
 	else
 		wxLaunchDefaultApplication(strExecProgram);

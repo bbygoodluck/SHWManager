@@ -234,7 +234,7 @@ bool CSHWFiles2::Initialize()
 	m_strTitle += wxT(" - Debug Version");
 #endif
 
-	m_strTitle += wxT(" Build-Date : 2023-07-27");
+	m_strTitle += wxT(" Build-Date : 2023-08-23");
 
 	_gAttrIndex = 0;
 	if(theJsonConfig->IsViewHiddenFile())
